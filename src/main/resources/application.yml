@@ -6,6 +6,7 @@ spring:
    active: mysql,redis
   application:
     name: user-server
+      
 
 springdoc: 
   api-docs: 
