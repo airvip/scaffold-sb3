@@ -1,0 +1,19 @@
+server:
+  port: 8900
+
+spring:
+  profiles:
+   active: mysql,redis
+  application:
+    name: user-server
+
+springdoc: 
+  api-docs: 
+    # 是否开启文档功能
+    enabled: true
+  swagger-ui: 
+    #自定义 swagger 前端请求路径，输入 http：127.0.0.1:8080/swagger-ui 会自动重定向到 swagger 页面
+    path: /swagger-ui
+  #包扫描路径 wang.diff.user.server.controller,wang.diff.user.server.dto.request
+  packages-to-scan: wang.diff.user.server.controller
+

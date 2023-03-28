@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1" author="airvip" runInTransaction="true">
+        <sqlFile dbms="mysql" stripComments="true" path="/sql/user.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet id="2" author="airvip"  runInTransaction="true">
+        <addColumn tableName="t_user">
+            <column name="name" type="varchar(60)" defaultValue="" remarks="用户名" ></column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="3" author="airvip"  runInTransaction="true">
+        <renameColumn tableName="t_user" oldColumnName="name" newColumnName="user_name" columnDataType="varchar(60)" remarks="用户名"></renameColumn>
+    </changeSet>
+    <changeSet id="4" author="airvip" runInTransaction="true">
+        <sql dbms="mysql">
+            INSERT INTO `t_user`(mobile) VALUE('13108765051');
+        </sql>
+    </changeSet>
+    <changeSet id="5" author="airvip" runInTransaction="true">
+        <modifyDataType tableName="t_user" columnName="balance" newDataType="decimal(18,2)"/>
+        <addNotNullConstraint tableName="t_user" columnName="balance" columnDataType="decimal(18,2)" defaultNullValue="0.0" />
+    </changeSet>
+
+    <!--<changeSet id="10000" author="airvip" >
+            <addPrimaryKey tableName="t_schedule" columnNames="id" constraintName="primary" />
+            <addColumn tableName="t_schedule">
+                <column name="otherinfo" type="varchar(255)"></column>
+            </addColumn>
+        </changeSet>-->
+
+
+
+</databaseChangeLog>

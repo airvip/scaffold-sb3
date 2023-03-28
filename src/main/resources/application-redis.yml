@@ -1,0 +1,7 @@
+spring:
+  data:
+    redis:
+      host: 192.168.226.136
+      database: 0
+      username:
+      password:
