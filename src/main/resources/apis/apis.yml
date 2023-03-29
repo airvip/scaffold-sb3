@@ -1,16 +1,33 @@
-openapi: 3.0.1
+openapi: 3.0.3
 info:
-  title: OpenAPI definition
-  version: v0
+  title: 接口文件yaml格式模版
+  description: 基于 OpenAPI 3.0 的一个工作流从文档到代码的模版项目
+  contact:
+    email: sdqhwzb@gmai.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: v0.0.1
+externalDocs:
+  description: 更多关于 Swagger 的文档请参考
+  url: http://swagger.io
 servers:
   - url: 'http://127.0.0.1:8900'
-    description: Generated server url
+    description: 由文档生成代码的工作流程
+tags:
+  - name: ping
+    description: ping 通测试文件
+  - name: user
+    description: 关于用户的操作 Operations about user
+# user methods: getById |  updateById |  deleteById  | addOne | getPage |
+# admin methods: getByIdManage |  updateByIdManage |  deleteByIdManage  | addOneManage | getPageManage |
 paths:
   /ping:
     get:
       tags:
-        - Ping
-      description: ping通测试API
+        - ping
+      summary: ping 通测试
+      description: ping 通测试API
       operationId: ping
       parameters:
         - name: name
@@ -26,5 +43,239 @@ paths:
             '*/*':
               schema:
                 type: string
+  /user:
+    post:
+      tags:
+        - user
+      summary: 新增
+      description: 创建接口
+      operationId: addOne
+      requestBody:
+        description: 新建用户对象
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAddDTO'
+      responses:
+        '200':
+          description: 新增操作成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+    get:
+      tags:
+        - user
+      summary: 获取列表
+      description: 获取列表接口
+      operationId: getPage
+      parameters:
+        - $ref: '#/components/parameters/page_size'
+        - $ref: '#/components/parameters/current_page'
+        - name: user_name
+          in: query
+          required: false
+          description: 用户名
+          example: 阿尔维奇
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 获取列表成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPageDTO'
+  /user/{id}:
+    get:
+      tags:
+        - user
+      summary: 获取单条记录
+      description: 获取单条记录接口
+      operationId: getById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id pk
+          example: 1
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 获取单条记录操作成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'          
+    put:
+      tags:
+        - user
+      summary: 更新单条记录
+      description: 更新单条记录接口
+      operationId: updateById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id pk
+          example: 1
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: 更新载体
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateDTO'
+      responses:
+        '200':
+          description: 修改单条记录操作成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseRespWithEffectiveCount'   
+    delete:
+      tags:
+        - user
+      summary: 删除单条记录
+      description: 删除单条记录接口
+      operationId: deleteById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id pk
+          example: 1
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 删除单条记录操作成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseRespWithEffectiveCount'  
 
-components: {}
+
+components: 
+  # common parameters
+  parameters:
+    page_size:
+      name: page_size
+      in: query
+      required: false
+      description: 每页条数
+      example: 20
+      schema:
+        type: integer
+    current_page:
+      name: current_page
+      in: query
+      required: false
+      description: 当前页
+      example: 1
+      schema:
+        type: integer
+  schemas:
+    # common data struction
+    BaseResp:
+      type: object
+      properties:
+        message:
+          type: string
+      title: BaseResp
+    BaseRespWithEffectiveCount:
+      allOf:
+        - $ref: '#/components/schemas/BaseResp'
+      type: object
+      properties:
+        effective_count:
+          type: integer
+          format: int32
+    OnePageData:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            total_size:
+              type: integer
+              example: 1000
+            current_page:
+              type: integer
+              example: 1
+            page_size:
+              type: integer
+              example: 20    
+    # server data struction
+    UserPageDTO:
+      description: user page list DTO
+      allOf:
+        - $ref: '#/components/schemas/OnePageData'
+        - type: object
+          properties:
+            list:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserDTO'
+    UserUpdateDTO:
+      description: user update DTO
+      allOf: 
+        - $ref: '#/components/schemas/UserAddDTO'
+      type: object
+      properties:
+        balance:
+          type: number
+          format: double
+          example: 1.0
+          description: 余额
+    UserAddDTO:
+      description: user add DTO
+      type: object
+      required:
+        - user_name
+        - mobile
+        - birthday
+      properties:
+        user_name:
+          type: string
+          example: 阿尔维奇
+          description: 用户名
+        mobile:
+          type: string
+          example: 13888888888
+          description: 手机号
+        birthday:
+          type: string
+          example: 2020-01-01
+          description: 出生年月日,实际项目更喜欢用 int 20220101      
+    UserDTO:
+      description: user entity DTO
+      allOf:
+        - $ref: '#/components/schemas/UserAddDTO'
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+          description: 主键
+        balance:
+          type: number
+          example: 1.0
+          description: 余额
+        status:
+          type: integer
+          format: int32
+          example: 1
+          description: 状态 1启用 0禁用
+        create_time:
+          type: string
+          format: date-time
+          description: 创建时间
+          
+          

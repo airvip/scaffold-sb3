@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import diff.wang.user.server.controller.PingApi;
 
 @RestController
-@Tag(name = "Ping")
+@Tag(name = "ping")
 public class PingController implements PingApi {
 
     @Override
