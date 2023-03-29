@@ -1,27 +1,24 @@
-package wang.diff.user.server.service;
+package wang.diff.user.server.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-import wang.diff.user.server.UserServerApplication;
-import wang.diff.user.server.util.MiscUtils;
-import org.springframework.util.*;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.util.Assert;
 
 @Slf4j
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = {UserServerApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("dev")
-public class MiscUtilsTest {
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+class MiscUtilsTest {
 
 
     @Test
     public void genOrderNoTest() {
         String prefix = "ORD";
         String orderNo = MiscUtils.genOrderNo(prefix);
-        log.info(orderNo);
+        log.info("生成的订单号为:{}", orderNo);
         Assert.notNull(orderNo, "未生成订单号");
         Assert.isTrue(orderNo.startsWith(prefix), "订单号前缀不正确");
     }

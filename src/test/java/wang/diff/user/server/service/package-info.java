@@ -1,1 +1,1 @@
-package wang.diff.user.server.util;
+package wang.diff.user.server.service;

@@ -17,6 +17,7 @@
         <java.version>17</java.version>
         <openapi-ui.version>2.0.4</openapi-ui.version>
         <jackson-annotations.version>2.14.2</jackson-annotations.version>
+        <hutool.version>5.8.16</hutool.version>
     </properties>
     <dependencies>
 
@@ -72,8 +73,13 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
             <version>${jackson-annotations.version}</version>
         </dependency>
 
