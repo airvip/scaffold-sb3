@@ -45,7 +45,8 @@ public class MiscUtils {
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(datetimeString, formatter);
-        return dateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
+        // return dateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
+        return dateTime.toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
     }
 
     /**
