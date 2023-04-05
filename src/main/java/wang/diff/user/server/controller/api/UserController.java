@@ -43,8 +43,7 @@ public class UserController implements UserApi{
     @Override
     public ResponseEntity<UserPageDTO> getPage(@Valid Integer pageSize, @Valid Integer currentPage,
             @Valid String userName) {
-        // TODO Auto-generated method stub
-        return null;
+        return ResponseEntity.ok(userService.getPage(pageSize,currentPage,userName));
     }
 
     @Override

@@ -1,5 +1,9 @@
 package wang.diff.user.server.service.convert;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
+import diff.wang.user.server.controller.model.OnePageDataPagination;
+import diff.wang.user.server.controller.model.UserPageDTO;
 import org.springframework.stereotype.Component;
 
 import diff.wang.user.server.controller.model.UserDTO;
@@ -9,6 +13,22 @@ import java.text.SimpleDateFormat;
 
 @Component
 public class UserConverter {
+
+    private static <T> void fillPageInfo(UserPageDTO rst, PageInfo<T> pd) {
+        final OnePageDataPagination onePageDataPagination = new OnePageDataPagination();
+        onePageDataPagination.setTotalSize((int)pd.getTotal());
+        onePageDataPagination.setCurrentPage(pd.getPageNum());
+        onePageDataPagination.setPageSize(pd.getPageSize());
+        rst.setPagination(onePageDataPagination);
+    }
+
+
+    public UserPageDTO covert2PageDto(PageInfo<User> pageData) {
+        final UserPageDTO rst = new UserPageDTO();
+        this.fillPageInfo(rst, pageData);
+        rst.setList(pageData.getList().stream().map(this::convert2Dto).toList());
+        return rst;
+    }
 
     public UserDTO convert2Dto(User user) {
         UserDTO userDTO = new UserDTO();

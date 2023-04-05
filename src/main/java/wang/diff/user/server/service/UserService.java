@@ -1,9 +1,6 @@
 package wang.diff.user.server.service;
 
-import diff.wang.user.server.controller.model.UserAddDTO;
-import diff.wang.user.server.controller.model.UserDTO;
-import diff.wang.user.server.controller.model.UserUpdateDTO;
-import diff.wang.user.server.controller.model.UserUpdateSelectedDTO;
+import diff.wang.user.server.controller.model.*;
 
 public interface UserService {
     
@@ -17,6 +14,6 @@ public interface UserService {
 
     UserDTO getById(Long id);
 
-    com.github.pagehelper.Page<UserDTO> getPage(Integer pageSize, Integer pageNum);
+    UserPageDTO getPage(Integer pageSize, Integer pageNum, String username);
     
 }

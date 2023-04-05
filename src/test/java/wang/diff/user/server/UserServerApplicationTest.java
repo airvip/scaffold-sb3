@@ -55,6 +55,8 @@ public class UserServerApplicationTest {
                             .enableLombok() // 开启 lombok 模型
                             .enableFileOverride() // 覆盖已生成文件
                             .enableRemoveIsPrefix() // 开启 Boolean 类型字段移除 is 前缀
+                            .enableColumnConstant() // 开启生成字段常量
+                            .enableTableFieldAnnotation() // 开启生成实体时生成字段注解
                     ; 
         })
         .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板

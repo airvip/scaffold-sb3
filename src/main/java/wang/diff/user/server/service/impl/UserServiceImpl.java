@@ -1,20 +1,19 @@
 package wang.diff.user.server.service.impl;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
-import org.springframework.http.HttpStatus;
+import com.github.pagehelper.PageInfo;
+import diff.wang.user.server.controller.model.*;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
-import diff.wang.user.server.controller.model.UserAddDTO;
-import diff.wang.user.server.controller.model.UserDTO;
-import diff.wang.user.server.controller.model.UserUpdateDTO;
-import diff.wang.user.server.controller.model.UserUpdateSelectedDTO;
 import jakarta.annotation.Resource;
 import wang.diff.user.server.dao.UserMapper;
 import wang.diff.user.server.entity.User;
@@ -58,9 +57,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserDTO> getPage(Integer pageSize, Integer pageNum) {
-        // TODO Auto-generated method stub
-        return null;
+    public UserPageDTO getPage(Integer pageSize, Integer pageNum, String username) {
+        PageHelper.startPage(pageNum, pageSize);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        if(username != null){
+            queryWrapper.like(User.USER_NAME, username);
+        }
+        List<User> list = userMapper.selectList(queryWrapper);
+        PageInfo<User> page = new PageInfo<>(list);
+        return userConverter.covert2PageDto(page);
     }
 
     @Override

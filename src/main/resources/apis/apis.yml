@@ -49,11 +49,11 @@ paths:
     put:
       tags:
         - user-manage
-      summary: 更新
-      description: 更新接口
+      summary: update
+      description: update api
       operationId: updateByIdsManage
       requestBody:
-        description: 更新对象
+        description: update object
         content:
           application/json:
             schema:
@@ -65,15 +65,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BaseRespWithEffectiveCount'   
+  /user/export-excel:
+    post:
+      tags:
+        - user-manage
+      summary: export
+      description: export api
+      operationId: exportExcel
+      requestBody:
+        description: export object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserExportDTO'
+      responses:
+        '200':
+          description: OK
+          # content:
+          #   application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+          #     schema:
+          #       type: string
+          #       format: binary
+
   /user:
     post:
       tags:
         - user
-      summary: 新增
-      description: 创建接口
+      summary: create
+      description: create api
       operationId: addOne
       requestBody:
-        description: 新建用户对象
+        description: create object
         content:
           application/json:
             schema:
@@ -88,8 +110,8 @@ paths:
     get:
       tags:
         - user
-      summary: 获取列表
-      description: 获取列表接口
+      summary: get page
+      description: get page api
       operationId: getPage
       parameters:
         - $ref: '#/components/parameters/page_size'
@@ -112,8 +134,8 @@ paths:
     get:
       tags:
         - user
-      summary: 获取单条记录
-      description: 获取单条记录接口
+      summary: get one
+      description: get one api
       operationId: getById
       parameters:
         - name: id
@@ -134,8 +156,8 @@ paths:
     put:
       tags:
         - user
-      summary: 更新单条记录
-      description: 更新单条记录接口
+      summary: update
+      description: update api
       operationId: updateById
       parameters:
         - name: id
@@ -162,8 +184,8 @@ paths:
     delete:
       tags:
         - user
-      summary: 删除单条记录
-      description: 删除单条记录接口
+      summary: delete
+      description: delete api
       operationId: deleteById
       parameters:
         - name: id
@@ -219,6 +241,11 @@ components:
           type: integer
           format: int32
     OnePageData:
+      # 启用这块只是为有个统一的page转换器
+      # discriminator:
+      #   propertyName: for_inheritance
+      #   mapping:
+      #     UserPageDTO: '#/components/schemas/UserPageDTO'
       type: object
       properties:
         pagination:
@@ -271,6 +298,13 @@ components:
           format: double
           example: 1.0
           description: 余额
+    UserExportDTO:
+      description: user export DTO
+      type: object
+      properties:
+        user_name:
+          type: string
+          description: user name
     UserAddDTO:
       description: user add DTO
       type: object
