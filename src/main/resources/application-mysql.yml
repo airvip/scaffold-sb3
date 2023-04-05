@@ -14,10 +14,4 @@ spring:
     enabled: true
     change-log: classpath:/db/liquibase/changelog.xml
 
-mybatis:
-  # 实体类的存放路径
-  type-aliases-package: wang.diff.user.server.entity
-  mapper-locations: classpath:mapper/*.xml
-  configuration:
-    # 下划线转驼峰配置
-    map-underscore-to-camel-case: true
+

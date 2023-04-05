@@ -19,8 +19,10 @@ tags:
     description: ping 通测试文件
   - name: user
     description: 关于用户的操作 Operations about user
+  - name: user-manage
+    description: 关于用户的操作 Operations about user
 # user methods: getById |  updateById |  deleteById  | addOne | getPage |
-# admin methods: getByIdManage |  updateByIdManage |  deleteByIdManage  | addOneManage | getPageManage |
+# admin methods: getByIdManage |  updateByIdManage | updateByIdsManage |  deleteByIdManage  | addOneManage | getPageManage 
 paths:
   /ping:
     get:
@@ -43,6 +45,26 @@ paths:
             '*/*':
               schema:
                 type: string
+  /user/manage:
+    put:
+      tags:
+        - user-manage
+      summary: 更新
+      description: 更新接口
+      operationId: updateByIdsManage
+      requestBody:
+        description: 更新对象
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateSelectedDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseRespWithEffectiveCount'   
   /user:
     post:
       tags:
@@ -58,7 +80,7 @@ paths:
               $ref: '#/components/schemas/UserAddDTO'
       responses:
         '200':
-          description: 新增操作成功
+          description: OK
           content:
             application/json:
               schema:
@@ -81,7 +103,7 @@ paths:
             type: string
       responses:
         '200':
-          description: 获取列表成功
+          description: OK
           content:
             application/json:
               schema:
@@ -104,7 +126,7 @@ paths:
             format: int64
       responses:
         '200':
-          description: 获取单条记录操作成功
+          description: OK
           content:
             application/json:
               schema:
@@ -125,7 +147,7 @@ paths:
             type: integer
             format: int64
       requestBody:
-        description: 更新载体
+        description: OK
         content:
           application/json:
             schema:
@@ -154,7 +176,7 @@ paths:
             format: int64
       responses:
         '200':
-          description: 删除单条记录操作成功
+          description: OK
           content:
             application/json:
               schema:
@@ -212,6 +234,22 @@ components:
               type: integer
               example: 20    
     # server data struction
+    UserUpdateSelectedDTO:
+      description: update seleccted ids
+      type: object
+      required:
+        - ids
+        - status
+      properties:
+        ids:
+          type: array
+          description: id list
+          items:
+            type: integer
+            format: int64
+        status:
+          type: integer
+          description: status
     UserPageDTO:
       description: user page list DTO
       allOf:
@@ -249,6 +287,10 @@ components:
           type: string
           example: 13888888888
           description: 手机号
+        sex:
+          type: integer
+          example: 1
+          description: 性别 1男 2女 0未知
         birthday:
           type: string
           example: 2020-01-01

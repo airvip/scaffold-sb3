@@ -18,7 +18,9 @@
         <openapi-ui.version>2.0.4</openapi-ui.version>
         <jackson-annotations.version>2.14.2</jackson-annotations.version>
         <hutool.version>5.8.16</hutool.version>
-        <tk.mybatis.version>4.2.2</tk.mybatis.version>
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+        <pagehelper.version>1.3.1</pagehelper.version>
+        <freemarker.version>2.3.32</freemarker.version>
     </properties>
     <dependencies>
 
@@ -59,11 +61,16 @@
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper-spring-boot-starter</artifactId>
-            <version>${tk.mybatis.version}</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
         </dependency>
+        
+
+
+
 
         <!-- 接口UI -->
         <dependency>
@@ -88,8 +95,29 @@
             <artifactId>jackson-module-jaxb-annotations</artifactId>
             <version>${jackson-annotations.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper.version}</version>
+        </dependency>
+
+        <!-- 代码生成工具 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>${freemarker.version}</version>
+        </dependency>
+
+
 
     </dependencies>
+
+
 
     <build>
         <plugins>
@@ -103,6 +131,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <mainClass>wang.diff.user.server.UserServerApplication</mainClass>
                 </configuration>
             </plugin>
 
@@ -129,6 +158,7 @@
                         <interfaceOnly>true</interfaceOnly>
                         <useTags>true</useTags>
                         <dateLibrary>legacy</dateLibrary>
+                        <!-- <dateLibrary>java8</dateLibrary> -->
                         <useSpringBoot3>true</useSpringBoot3>
                         <openApiNullable>false</openApiNullable>
                         <skipDefaultInterface>true</skipDefaultInterface>
@@ -152,31 +182,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.4.2</version>
-                 <configuration>
-                    <!-- generator 工具配置文件的位置 -->
-                    <configurationFile>${basedir}/src/main/resources/db/generator/generatorConfig.xml</configurationFile>
-                    <overwrite>true</overwrite>
-                    <verbose>true</verbose>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.mysql</groupId>
-                        <artifactId>mysql-connector-j</artifactId>
-                        <version>8.0.32</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>tk.mybatis</groupId>
-                        <artifactId>mapper</artifactId>
-                        <version>4.2.2</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
 
 
 

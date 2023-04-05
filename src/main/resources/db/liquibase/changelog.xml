@@ -19,9 +19,24 @@
             INSERT INTO `t_user`(mobile) VALUE('13108765051');
         </sql>
     </changeSet>
-    <changeSet id="5" author="airvip" runInTransaction="true">
-        <modifyDataType tableName="t_user" columnName="balance" newDataType="decimal(18,2)"/>
+    <changeSet id="5" author="airvip" runInTransaction="true"> 
+        <modifyDataType tableName="t_user" columnName="balance" newDataType="decimal(18,2)" />
         <addNotNullConstraint tableName="t_user" columnName="balance" columnDataType="decimal(18,2)" defaultNullValue="0.0" />
+        <addDefaultValue tableName="t_user" columnName="balance" columnDataType="decimal(18,2)" defaultValueNumeric="0.0"/>
+    </changeSet>
+    <changeSet id="6" author="airvip" runInTransaction="true">
+        <sql dbms="mysql">
+            ALTER TABLE `t_user` MODIFY COLUMN `update_time` datetime ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' AFTER `create_time`;
+        </sql>
+    </changeSet>
+    <changeSet id="7" author="airvip">  
+        <setColumnRemarks schemaName="user_server" tableName="t_user" columnName="balance" columnDataType="decimal(18,2)" remarks="余额"/>
+    </changeSet>
+    <!-- 还是sql好用 -->
+    <changeSet  id="8" author="airvip">
+        <sql>
+        ALTER TABLE `user_server`.`t_user` MODIFY COLUMN `balance` decimal(18, 2) NOT NULL DEFAULT 0.0 COMMENT '余额' AFTER `sex`;
+        </sql>
     </changeSet>
 
     <!--<changeSet id="10000" author="airvip" >

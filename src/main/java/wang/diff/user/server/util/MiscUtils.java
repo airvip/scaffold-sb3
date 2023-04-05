@@ -4,9 +4,12 @@ import cn.hutool.core.util.StrUtil;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -47,6 +50,19 @@ public class MiscUtils {
         LocalDateTime dateTime = LocalDateTime.parse(datetimeString, formatter);
         // return dateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
         return dateTime.toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+    }
+
+    /**
+     * Converts a string to a date object.
+     * 
+     * @param dateString the string to convert
+     * @param format     the format of the string (e.g. "yyyy-MM-dd")
+     * @return the date object
+     * @throws ParseException if the string cannot be parsed as a date
+     */
+    public static Date stringToDate(String dateString, String format) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        return formatter.parse(dateString);
     }
 
     /**

@@ -1,5 +1,6 @@
 package wang.diff.user.server.controller.api;
 
+import jakarta.annotation.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,15 +12,19 @@ import diff.wang.user.server.controller.model.UserPageDTO;
 import diff.wang.user.server.controller.model.UserUpdateDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import wang.diff.user.server.service.UserService;
 
 @RestController
 @Tag(name="user")
 public class UserController implements UserApi{
 
+    @Resource
+    private UserService userService;
+
     @Override
     public ResponseEntity<UserDTO> addOne(@Valid UserAddDTO userAddDTO) {
-        // TODO Auto-generated method stub
-        return null;
+        final UserDTO userDTO = userService.addOne(userAddDTO);
+        return ResponseEntity.ok(userDTO);
     }
 
     @Override
@@ -31,7 +36,8 @@ public class UserController implements UserApi{
     @Override
     public ResponseEntity<UserDTO> getById(Long id) {
         // TODO Auto-generated method stub
-        return null;
+        final UserDTO userDTO = userService.getById(id);
+        return ResponseEntity.ok(userDTO);
     }
 
     @Override

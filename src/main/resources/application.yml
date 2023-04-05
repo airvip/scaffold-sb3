@@ -6,7 +6,11 @@ spring:
    active: mysql,redis
   application:
     name: user-server
-      
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm:ss
+    property-naming-strategy: SNAKE_CASE
+    time-zone: Asia/Shanghai      
 
 springdoc: 
   api-docs: 
@@ -18,3 +22,8 @@ springdoc:
   #包扫描路径 wang.diff.user.server.controller,wang.diff.user.server.dto.request
   packages-to-scan: wang.diff.user.server.controller
 
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
