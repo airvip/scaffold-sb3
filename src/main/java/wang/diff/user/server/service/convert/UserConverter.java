@@ -17,7 +17,7 @@ public class UserConverter {
     private static <T> void fillPageInfo(UserPageDTO rst, PageInfo<T> pd) {
         final OnePageDataPagination onePageDataPagination = new OnePageDataPagination();
         onePageDataPagination.setTotalSize((int)pd.getTotal());
-        onePageDataPagination.setCurrentPage(pd.getPageNum());
+        onePageDataPagination.setPageNum(pd.getPageNum());
         onePageDataPagination.setPageSize(pd.getPageSize());
         rst.setPagination(onePageDataPagination);
     }

@@ -41,9 +41,9 @@ public class UserController implements UserApi{
     }
 
     @Override
-    public ResponseEntity<UserPageDTO> getPage(@Valid Integer pageSize, @Valid Integer currentPage,
+    public ResponseEntity<UserPageDTO> getPage(@Valid Integer pageNum, @Valid Integer pageSize,
             @Valid String userName) {
-        return ResponseEntity.ok(userService.getPage(pageSize,currentPage,userName));
+        return ResponseEntity.ok(userService.getPage(pageNum,pageSize,userName));
     }
 
     @Override

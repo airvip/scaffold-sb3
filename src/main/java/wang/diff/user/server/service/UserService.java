@@ -14,6 +14,6 @@ public interface UserService {
 
     UserDTO getById(Long id);
 
-    UserPageDTO getPage(Integer pageSize, Integer pageNum, String username);
+    UserPageDTO getPage(Integer pageNum, Integer pageSize, String username);
     
 }

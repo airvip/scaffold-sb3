@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-   active: mysql,redis
+   active: mysql,redis,store
   application:
     name: user-server
   jackson:

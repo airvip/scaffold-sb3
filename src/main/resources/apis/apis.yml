@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
-  title: 接口文件yaml格式模版
-  description: 基于 OpenAPI 3.0 的一个工作流从文档到代码的模版项目
+  title: springboot3 base program
+  description: a template program based on OpenAPI 3.0
   contact:
     email: sdqhwzb@gmai.com
   license:
@@ -9,27 +9,30 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: v0.0.1
 externalDocs:
-  description: 更多关于 Swagger 的文档请参考
+  description: more Swagger info
   url: http://swagger.io
 servers:
   - url: 'http://127.0.0.1:8900'
-    description: 由文档生成代码的工作流程
+    description: workflow by doc generate code
 tags:
   - name: ping
-    description: ping 通测试文件
+    description: Ping Test
+  - name: object-store
+    description: Object Store
   - name: user
-    description: 关于用户的操作 Operations about user
+    description: Client - Operations About User
   - name: user-manage
-    description: 关于用户的操作 Operations about user
+    description: Manage - Operations About User
 # user methods: getById |  updateById |  deleteById  | addOne | getPage |
-# admin methods: getByIdManage |  updateByIdManage | updateByIdsManage |  deleteByIdManage  | addOneManage | getPageManage 
+# admin methods: getByIdManage |  updateByIdManage | updateByIdsManage |  deleteByIdManage  | addOneManage | getPageManage
+# getPage method first param is pageNum , second param is pageSize
 paths:
   /ping:
     get:
       tags:
         - ping
-      summary: ping 通测试
-      description: ping 通测试API
+      summary: ping testing
+      description: ping api
       operationId: ping
       parameters:
         - name: name
@@ -45,6 +48,39 @@ paths:
             '*/*':
               schema:
                 type: string
+  /upload-multipart:
+    post:
+      tags:
+        - object-store
+      summary: object store
+      description: object store pi
+      operationId: uploadMultipart
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+            encoding:
+              files:
+                contentType: image/png, image/jpeg
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  urls:
+                    type: array
+                    items:
+                      type: string
   /user/manage:
     put:
       tags:
@@ -64,7 +100,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseRespWithEffectiveCount'   
+                $ref: '#/components/schemas/BaseRespWithEffectiveCount'
   /user/export-excel:
     post:
       tags:
@@ -114,13 +150,13 @@ paths:
       description: get page api
       operationId: getPage
       parameters:
-        - $ref: '#/components/parameters/page_size'
-        - $ref: '#/components/parameters/current_page'
+        - $ref: '#/components/parameters/PageNum'
+        - $ref: '#/components/parameters/PageSize'
         - name: user_name
           in: query
           required: false
-          description: 用户名
-          example: 阿尔维奇
+          description: username
+          example: airvip
           schema:
             type: string
       responses:
@@ -152,7 +188,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserDTO'          
+                $ref: '#/components/schemas/UserDTO'
     put:
       tags:
         - user
@@ -176,11 +212,11 @@ paths:
               $ref: '#/components/schemas/UserUpdateDTO'
       responses:
         '200':
-          description: 修改单条记录操作成功
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseRespWithEffectiveCount'   
+                $ref: '#/components/schemas/BaseRespWithEffectiveCount'
     delete:
       tags:
         - user
@@ -202,26 +238,26 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseRespWithEffectiveCount'  
+                $ref: '#/components/schemas/BaseRespWithEffectiveCount'
 
 
-components: 
+components:
   # common parameters
   parameters:
-    page_size:
+    PageNum:
+      name: page_num
+      in: query
+      required: false
+      description: page number
+      example: 1
+      schema:
+        type: integer
+    PageSize:
       name: page_size
       in: query
       required: false
-      description: 每页条数
+      description: page size
       example: 20
-      schema:
-        type: integer
-    current_page:
-      name: current_page
-      in: query
-      required: false
-      description: 当前页
-      example: 1
       schema:
         type: integer
   schemas:
@@ -254,12 +290,12 @@ components:
             total_size:
               type: integer
               example: 1000
-            current_page:
+            page_num:
               type: integer
               example: 1
             page_size:
               type: integer
-              example: 20    
+              example: 20
     # server data struction
     UserUpdateSelectedDTO:
       description: update seleccted ids
@@ -289,7 +325,7 @@ components:
                 $ref: '#/components/schemas/UserDTO'
     UserUpdateDTO:
       description: user update DTO
-      allOf: 
+      allOf:
         - $ref: '#/components/schemas/UserAddDTO'
       type: object
       properties:
@@ -315,20 +351,20 @@ components:
       properties:
         user_name:
           type: string
-          example: 阿尔维奇
-          description: 用户名
+          example: airvip
+          description: username
         mobile:
           type: string
           example: 13888888888
-          description: 手机号
+          description: mobile
         sex:
           type: integer
           example: 1
-          description: 性别 1男 2女 0未知
+          description: sex 1man 2woman 0unkonw
         birthday:
           type: string
           example: 2020-01-01
-          description: 出生年月日,实际项目更喜欢用 int 20220101      
+          description: birthday,i like use int,example 20220101
     UserDTO:
       description: user entity DTO
       allOf:
@@ -339,19 +375,19 @@ components:
           type: integer
           format: int64
           example: 10
-          description: 主键
+          description: PK
         balance:
           type: number
           example: 1.0
-          description: 余额
+          description: balance
         status:
           type: integer
           format: int32
           example: 1
-          description: 状态 1启用 0禁用
+          description: status 1enable 0disable
         create_time:
           type: string
           format: date-time
-          description: 创建时间
+          description: create time
           
           

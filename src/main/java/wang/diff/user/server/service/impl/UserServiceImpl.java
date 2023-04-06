@@ -11,7 +11,6 @@ import diff.wang.user.server.controller.model.*;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
 import jakarta.annotation.Resource;
@@ -57,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserPageDTO getPage(Integer pageSize, Integer pageNum, String username) {
+    public UserPageDTO getPage(Integer pageNum, Integer pageSize, String username) {
         PageHelper.startPage(pageNum, pageSize);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         if(username != null){
