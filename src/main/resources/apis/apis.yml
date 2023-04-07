@@ -75,12 +75,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  urls:
-                    type: array
-                    items:
-                      type: string
+                $ref: '#/components/schemas/ObjectStoreMultipartDTO'
   /user/manage:
     put:
       tags:
@@ -297,6 +292,15 @@ components:
               type: integer
               example: 20
     # server data struction
+    ObjectStoreMultipartDTO:
+      description: multipart object store
+      type: object
+      properties:
+        urls:
+          type: array
+          description: url list
+          items:
+            type: string
     UserUpdateSelectedDTO:
       description: update seleccted ids
       type: object
