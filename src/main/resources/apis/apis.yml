@@ -23,6 +23,8 @@ tags:
     description: Client - Operations About User
   - name: user-manage
     description: Manage - Operations About User
+  - name: session
+    description: login and logout
 # user methods: getById |  updateById |  deleteById  | addOne | getPage |
 # admin methods: getByIdManage |  updateByIdManage | updateByIdsManage |  deleteByIdManage  | addOneManage | getPageManage
 # getPage method first param is pageNum , second param is pageSize
@@ -159,6 +161,25 @@ paths:
           #       type: string
           #       format: binary
 
+  /session:
+    post:
+      tags:
+        - session
+      summary: login
+      description: login api
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionLoginDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResp'
   /user:
     post:
       tags:
@@ -358,6 +379,20 @@ components:
         status:
           type: integer
           description: status
+    SessionLoginDTO:
+      description: login DTO
+      required:
+        - mobile
+        - password
+      properties:
+        mobile:
+          type: string
+          example: 13100000000
+          description: mobile number
+        password:
+          type: string
+          example: 123456
+          description: password
     UserPageDTO:
       description: user page list DTO
       allOf:

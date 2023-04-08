@@ -11,9 +11,33 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MiscUtils {
+
+
+    /**
+     * 生成一个 1- 100的double岁数
+     * @return
+     */
+    public static double generateRandomDouble() {
+        double randomDouble = Math.random() * 100;
+        return randomDouble;
+    }
+
+    /**
+     * 生成6位随机数字符串
+     * @return
+     */
+    public static String generateRandomString() {
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 6; i++) {
+            sb.append(random.nextInt(10));
+        }
+        return sb.toString();
+    };
 
     /**
      * 生成订单

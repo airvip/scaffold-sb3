@@ -1,6 +1,7 @@
 server:
   port: 8900
 
+
 spring:
   profiles:
    active: mysql,redis,store
@@ -31,3 +32,12 @@ pagehelper:
 logging:
   level:
     wang.diff.user.server.dao: DEBUG # 看sql
+    wang.diff.user.server.controller: DEBUG # 看sql
+  pattern:
+    level: debug
+#  file:
+#    name: user-server.log
+#    path: .
+
+#    root: debug
+#debug: true

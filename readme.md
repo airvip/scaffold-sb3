@@ -30,7 +30,8 @@
   * [s3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html)
   * [minio](http://www.minio.org.cn/docs/minio/container/index.html)
   * [minio-java](https://min.io/docs/minio/linux/developers/java/minio-java.html)
-
+8. redis
+  * [Redis support](https://docs.spring.io/spring-data/redis/docs/current/reference/html/#redis:setup)
 
 # 打包运行
 
