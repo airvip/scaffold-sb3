@@ -30,3 +30,17 @@
   * [s3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html)
   * [minio](http://www.minio.org.cn/docs/minio/container/index.html)
   * [minio-java](https://min.io/docs/minio/linux/developers/java/minio-java.html)
+
+
+# 打包运行
+
+1. 运行
+```
+mvn spring-boot:run
+```
+
+2. 打包跳过所有测试
+
+```
+mvn clean package -DskipTests
+```

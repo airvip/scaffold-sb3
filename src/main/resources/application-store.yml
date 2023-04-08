@@ -17,4 +17,4 @@ minio:
   endpoint: http://192.168.226.136:9000
   access-key: hUEA1XVWeO9ioHsp
   secret-key: OD8ddwu8o4MiFf6Qi9bfTf6AzfAq1uEP
-  bucket-name: spingboot
+  bucket-name: springboot

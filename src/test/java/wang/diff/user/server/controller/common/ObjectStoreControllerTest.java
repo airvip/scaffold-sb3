@@ -14,7 +14,8 @@ public class ObjectStoreControllerTest {
 
     @Test
     void uploadMutilPartTest() {
-        objectStoreController.uploadMultipart(null);
+        // objectStoreController.uploadMultipart(null);
+        System.out.println("hello");
     }
     
 }

@@ -1,10 +1,12 @@
 package wang.diff.user.server.controller.common;
 
 import diff.wang.user.server.controller.ObjectStoreApi;
-import diff.wang.user.server.controller.model.ObjectStoreMultipartDTO;
+import diff.wang.user.server.controller.model.GetBatchUrlRequest;
+import diff.wang.user.server.controller.model.ObjectStoreBatchDTO;
 import io.minio.MinioClient;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import wang.diff.user.server.util.MinioUtils;
 
 import java.util.List;
@@ -28,15 +30,32 @@ public class ObjectStoreController implements ObjectStoreApi {
     @Resource
     private MinioUtils minioUtils;
 
+    @Resource
+    private HttpServletResponse httpServletResponse;
+
     @Override
-    public ResponseEntity<ObjectStoreMultipartDTO> uploadMultipart(List<MultipartFile> files) {
+    public ResponseEntity<ObjectStoreBatchDTO> getBatchUrl(GetBatchUrlRequest getBatchUrlRequest) {
+        List<String> uploadObjectUrls = minioUtils.getUploadObjectUrls(bucket, getBatchUrlRequest.getFilenames());
+        ObjectStoreBatchDTO ot =  new ObjectStoreBatchDTO();
+        ot.setUrls(uploadObjectUrls);
+        return ResponseEntity.ok(ot);
+    }
+
+    @Override
+    public ResponseEntity<Void> getDownload(String filename) {
+        minioUtils.download(bucket,filename, httpServletResponse);
+        return ResponseEntity.ok(null);
+    }
+
+    @Override
+    public ResponseEntity<ObjectStoreBatchDTO> uploadMultipart(List<MultipartFile> files) {
         
         MultipartFile[] fileArray = new MultipartFile[files.size()];
         MultipartFile[] array = files.toArray(fileArray);
         // MultipartFile[] filesArray = null;
         // files.stream().forEach(x->filesArray.);;
-        List<String> uploadFileBatch = minioUtils.uploadFileBatch("spingboot", array);
-        ObjectStoreMultipartDTO objectStoreMultipartDTO = new ObjectStoreMultipartDTO();
+        List<String> uploadFileBatch = minioUtils.uploadFileBatch(bucket, array);
+        ObjectStoreBatchDTO objectStoreMultipartDTO = new ObjectStoreBatchDTO();
         objectStoreMultipartDTO.setUrls(uploadFileBatch);
         return ResponseEntity.ok(objectStoreMultipartDTO);
     }

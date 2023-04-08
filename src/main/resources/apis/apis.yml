@@ -48,6 +48,47 @@ paths:
             '*/*':
               schema:
                 type: string
+  /download:
+    get:
+      tags:
+        - object-store
+      summary: get download
+      description: get download api
+      operationId: getDownload
+      parameters:
+        - name: filename
+          in: query
+          required: true
+          description: filename
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+  /get-batch-url:
+    put:
+      tags:
+        - object-store
+      summary: get batch url
+      description: get batch url api
+      operationId: getBatchUrl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filenames:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStoreBatchDTO'
   /upload-multipart:
     post:
       tags:
@@ -75,7 +116,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ObjectStoreMultipartDTO'
+                $ref: '#/components/schemas/ObjectStoreBatchDTO'
   /user/manage:
     put:
       tags:
@@ -292,7 +333,7 @@ components:
               type: integer
               example: 20
     # server data struction
-    ObjectStoreMultipartDTO:
+    ObjectStoreBatchDTO:
       description: multipart object store
       type: object
       properties:

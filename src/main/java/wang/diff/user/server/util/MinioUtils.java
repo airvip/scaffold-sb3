@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.val;
 import org.apache.poi.util.IOUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -115,6 +116,18 @@ public class MinioUtils {
      * 获取外链地址
      * @param bucketName
      * @param objectName
+     * @return
+     */
+    @SneakyThrows(Exception.class)
+    public String getUploadObjectUrl(String bucketName, String objectName) {
+        return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder().method(Method.GET)
+                .bucket(bucketName).object(objectName).expiry(7*24*60*60).build());
+    }
+
+    /**
+     * 获取外链地址
+     * @param bucketName
+     * @param objectName
      * @param expires 
      * @return
      */
@@ -122,6 +135,23 @@ public class MinioUtils {
     public String getUploadObjectUrl(String bucketName, String objectName, Integer expires) {
         return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder().method(Method.GET)
                 .bucket(bucketName).object(objectName).expiry(expires).build());
+    }
+
+    /**
+     * 批量获取文件 url
+     * @param bucketName
+     * @param objectName
+     * @return
+     */
+    public List<String> getUploadObjectUrls(String bucketName, List<String> objectName) {
+        List<String> urls = new ArrayList<>();
+        for (String filename:objectName) {
+            String fileUrl = getUploadObjectUrl(bucketName, filename);
+            if(fileUrl != null) {
+                urls.add(fileUrl);
+            }
+        }
+        return urls;
     }
 
 
@@ -157,7 +187,8 @@ public class MinioUtils {
                 }
             }
         }
-        return getUploadObjectUrl(bucketName, originalFilename, 7 * 24 * 60 * 60);
+        return originalFilename;
+//        return getUploadObjectUrl(bucketName, originalFilename, 7 * 24 * 60 * 60);
     }
 
 
