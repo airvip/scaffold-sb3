@@ -25,6 +25,8 @@ tags:
     description: Manage - Operations About User
   - name: session
     description: login and logout
+  - name: send-msg
+    description: send msg
 # user methods: getById |  updateById |  deleteById  | addOne | getPage |
 # admin methods: getByIdManage |  updateByIdManage | updateByIdsManage |  deleteByIdManage  | addOneManage | getPageManage
 # getPage method first param is pageNum , second param is pageSize
@@ -50,6 +52,20 @@ paths:
             '*/*':
               schema:
                 type: string
+  /send-mobile-code:
+    post:
+      tags:
+        - send-msg
+      summary: send msg code
+      description: send msg code api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMsgOfMobileCodeDTO'
+      responses:
+        200:
+          description: OK
   /download:
     get:
       tags:
@@ -354,6 +370,14 @@ components:
               type: integer
               example: 20
     # server data struction
+    SendMsgOfMobileCodeDTO:
+      type: object
+      properties:
+        mobile:
+          type: string
+          description: mobile
+      required:
+        - mobile
     ObjectStoreBatchDTO:
       description: multipart object store
       type: object

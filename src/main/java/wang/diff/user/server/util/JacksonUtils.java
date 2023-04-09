@@ -92,7 +92,7 @@ public class JacksonUtils {
      */
     private static <T> T parse(String json, Class<T> clazz, TypeReference<T> type) {
         T obj = null;
-        if (!StringUtils.hasLength(json)) {
+        if (StringUtils.hasLength(json)) {
             try {
                 if (clazz != null) {
                     obj = om.readValue(json, clazz);

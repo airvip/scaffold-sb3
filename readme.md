@@ -32,6 +32,8 @@
   * [minio-java](https://min.io/docs/minio/linux/developers/java/minio-java.html)
 8. redis
   * [Redis support](https://docs.spring.io/spring-data/redis/docs/current/reference/html/#redis:setup)
+9. kafka
+  * [Apache Kafka Support](https://docs.spring.io/spring-boot/docs/current/reference/html/messaging.html#messaging.kafka)
 
 # 打包运行
 
