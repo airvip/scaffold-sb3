@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import wang.diff.user.server.constants.KafkaTopicConfig;
+import wang.diff.user.server.dto.SendShortMsgDTO;
 import wang.diff.user.server.dto.SendVerificationCodeDTO;
 import wang.diff.user.server.util.JacksonUtils;
 
@@ -25,9 +26,14 @@ public class CommonKafkaProducer {
     }
 
 
+    public void send(SendShortMsgDTO sendShortMsgDTODTO) {
+        String json = JacksonUtils.toJson(sendShortMsgDTODTO);
+        send(KafkaTopicConfig.SEND_SHORT_MSG, json);
+    }
+
 
     private void send(String kafkaTopic, String message) {
-        log.info("接收到 topic:{} 的消息:{}", kafkaTopic,message);
+        log.info("Kafka 生产者：接收到 topic:{} 的消息:{}", kafkaTopic,message);
         kafkaTemplate.send(kafkaTopic, message);
     }
 

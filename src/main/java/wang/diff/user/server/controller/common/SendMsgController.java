@@ -12,7 +12,7 @@ import wang.diff.user.server.util.MiscUtils;
 
 @Tag(name = "send-msg")
 @RestController
-public class SendMagController implements SendMsgApi {
+public class SendMsgController implements SendMsgApi {
 
     @Resource
     private CommonKafkaProducer commonKafkaProducer;

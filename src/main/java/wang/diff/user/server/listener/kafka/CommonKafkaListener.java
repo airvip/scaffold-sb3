@@ -16,9 +16,9 @@ public class CommonKafkaListener {
     @KafkaListener(topics = KafkaTopicConfig.SEND_VERIFICATION_CODE, groupId = GROUP_ID)
 //    @KafkaListener(topics = KafkaTopicConfig.SEND_VERIFICATION_CODE)
     public void processMessageSms(String message) {
-        log.warn("receive sms topic message:{}", message);
+        log.info("Kafka 消费者：接收到发送消息请求,消息内容:{}", message);
         SendVerificationCodeDTO parse = JacksonUtils.parse(message, SendVerificationCodeDTO.class);
-        log.info("接收到发送短信的数据,mobile:{},code:{}",parse.getMobile(),parse.getCode());
+        log.info("Kafka 消费者：发送短信验证码的数据,mobile:{},code:{}",parse.getMobile(),parse.getCode());
     }
 
 

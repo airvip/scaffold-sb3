@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import wang.diff.user.server.util.MiscUtils;
 
 import java.time.Duration;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -39,14 +40,15 @@ public class SessionController implements SessionApi {
 
         String idsKey = "order.ids";
 
-        for (Integer i = 0; i<10; i++) {
-            redisTemplate.opsForZSet().add(idsKey, i.toString(), MiscUtils.generateRandomDouble());
+        for (int i = 0; i<10; i++) {
+            redisTemplate.opsForZSet().add(idsKey, Integer.toString(i), MiscUtils.generateRandomDouble());
         }
 
         Set<ZSetOperations.TypedTuple<String>> typedTuples = redisTemplate.opsForZSet().rangeWithScores(idsKey, 0, -1);
-        typedTuples.stream().forEach(x-> {
+        assert typedTuples != null;
+        typedTuples.forEach(x-> {
             log.info("........score:{},value:{}.....",x.getScore(),x.getValue());
-            if( x.getValue().equals("3")){
+            if(Objects.equals(x.getValue(), "3")){
                 redisTemplate.opsForZSet().remove(idsKey, x.getValue());
             }
         });
@@ -54,7 +56,8 @@ public class SessionController implements SessionApi {
         log.info(StrUtil.repeat("=====", 10));
 
         Set<ZSetOperations.TypedTuple<String>> typedTuplesNext = redisTemplate.opsForZSet().rangeWithScores(idsKey, 0, -1);
-        typedTuplesNext.stream().forEach(x-> {
+        assert typedTuplesNext != null;
+        typedTuplesNext.forEach(x-> {
             log.info("........score:{},value:{}.....",x.getScore(),x.getValue());
         });
 
