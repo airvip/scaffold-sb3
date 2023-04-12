@@ -8,6 +8,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
+import wang.diff.user.server.constants.KafkaTopicConfig;
 
 import java.time.Duration;
 
@@ -37,7 +38,8 @@ public class KafkaSyncProducerConfig {
      */
     @Bean
     public KafkaMessageListenerContainer<String, String> repliesContainer(ConsumerFactory<String, String> cf) {
-        val containerProperties = new ContainerProperties("KafkaSyncMessageResponse");
+        val containerProperties = new ContainerProperties(KafkaTopicConfig.KafkaSyncMessage.RESPONSE_TOPIC_NAME,
+                KafkaTopicConfig.KafkaSyncMessageSay.RESPONSE_TOPIC_NAME);
         return new KafkaMessageListenerContainer<>(cf, containerProperties);
     }
 
