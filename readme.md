@@ -7,6 +7,9 @@
 
 之所以采用这种工作流方式是方便框架基础版本升级，在升级的时候只需要修改很少的代码就可完成项目升级。尤其是从 springboot2 升级到 springboot3，可以充分体会这种工作流的优势。
 
+# TODO
+1. 集成 jwt and interceptor
+
 # 技术栈
 1. springboot3 
   * [Start a new Spring Boot project](https://spring.io/quickstart)
@@ -34,6 +37,7 @@
   * [Redis support](https://docs.spring.io/spring-data/redis/docs/current/reference/html/#redis:setup)
 9. kafka
   * [Apache Kafka Support](https://docs.spring.io/spring-boot/docs/current/reference/html/messaging.html#messaging.kafka)
+  * [Apache Kafka Reference](https://docs.spring.io/spring-kafka/docs/current/reference/html/#reference)
 
 # 打包运行
 
