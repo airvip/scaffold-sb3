@@ -1,12 +1,11 @@
 package wang.diff.user.server.listener.kafka;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import wang.diff.user.server.constants.KafkaTopicConfig;
+import wang.diff.user.server.common.constants.KafkaTopicConfig;
 import wang.diff.user.server.dto.SendVerificationCodeDTO;
-import wang.diff.user.server.util.JacksonUtils;
+import wang.diff.user.server.common.util.JacksonUtils;
 
 @Slf4j
 @Component

@@ -13,18 +13,30 @@ spring:
     property-naming-strategy: SNAKE_CASE
     time-zone: Asia/Shanghai      
 
-springdoc: 
+springdoc:
   api-docs: 
     # 是否开启文档功能
     enabled: true
+    groups:
+      enabled: true
   swagger-ui: 
     #自定义 swagger 前端请求路径，输入 http：127.0.0.1:8080/swagger-ui 会自动重定向到 swagger 页面
     path: /swagger-ui
   #包扫描路径 wang.diff.user.server.controller,wang.diff.user.server.dto.request
-  packages-to-scan: wang.diff.user.server.controller
+#  packages-to-scan: wang.diff.user.server.controller
+  group-configs:
+    - group: admin #分组名
+      packages-to-scan:
+        - wang.diff.user.server.controller.admin #按路径匹配
+    - group: user #分组名
+      packages-to-scan:
+        - wang.diff.user.server.controller.api
+    - group: common
+      packages-to-scan:
+        - wang.diff.user.server.controller.common #按包路径匹配
 
 
-pagehelper:
+page-helper:
   helper-dialect: mysql
   reasonable: true
   supportMethodsArguments: true

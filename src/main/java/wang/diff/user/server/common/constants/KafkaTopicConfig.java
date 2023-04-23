@@ -1,4 +1,4 @@
-package wang.diff.user.server.constants;
+package wang.diff.user.server.common.constants;
 
 public class KafkaTopicConfig {
     private KafkaTopicConfig() {

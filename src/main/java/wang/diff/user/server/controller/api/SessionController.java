@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import diff.wang.user.server.controller.SessionApi;
 import diff.wang.user.server.controller.model.BaseResp;
 import diff.wang.user.server.controller.model.SessionLoginDTO;
+import diff.wang.user.server.controller.model.UserDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +13,13 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import wang.diff.user.server.util.MiscUtils;
+import wang.diff.user.server.common.util.JwtUtils;
+import wang.diff.user.server.common.util.MiscUtils;
+import wang.diff.user.server.service.UserService;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -27,42 +32,17 @@ public class SessionController implements SessionApi {
     @Resource
     private RedisTemplate<String,String> redisTemplate;
 
+    @Resource
+    private UserService userService;
+
     @Override
     public ResponseEntity<BaseResp> login(SessionLoginDTO sessionLoginDTO) {
         log.info("this is a info information");
-        // 了解
-        val valueOps = redisTemplate.boundValueOps("session." + sessionLoginDTO.getMobile());
-        String randomString = MiscUtils.generateRandomString();
-        valueOps.set(randomString, Duration.ofSeconds(10L));
 
-        // 推荐
-        redisTemplate.opsForValue().set("now-mobile", randomString, 20L, TimeUnit.SECONDS);
-
-        String idsKey = "order.ids";
-
-        for (int i = 0; i<10; i++) {
-            redisTemplate.opsForZSet().add(idsKey, Integer.toString(i), MiscUtils.generateRandomDouble());
-        }
-
-        Set<ZSetOperations.TypedTuple<String>> typedTuples = redisTemplate.opsForZSet().rangeWithScores(idsKey, 0, -1);
-        assert typedTuples != null;
-        typedTuples.forEach(x-> {
-            log.info("........score:{},value:{}.....",x.getScore(),x.getValue());
-            if(Objects.equals(x.getValue(), "3")){
-                redisTemplate.opsForZSet().remove(idsKey, x.getValue());
-            }
-        });
-
-        log.info(StrUtil.repeat("=====", 10));
-
-        Set<ZSetOperations.TypedTuple<String>> typedTuplesNext = redisTemplate.opsForZSet().rangeWithScores(idsKey, 0, -1);
-        assert typedTuplesNext != null;
-        typedTuplesNext.forEach(x-> {
-            log.info("........score:{},value:{}.....",x.getScore(),x.getValue());
-        });
-
-
-
-        return ResponseEntity.ok(new BaseResp().message(randomString));
+        UserDTO user = userService.getByMobile(sessionLoginDTO.getMobile());
+        List<String> role = new ArrayList<>();
+        role.add("ADMIN");
+        String token = JwtUtils.createToken(user.getId().toString(), role);
+        return ResponseEntity.ok(new BaseResp().message(token));
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
-import wang.diff.user.server.constants.KafkaTopicConfig;
+import wang.diff.user.server.common.constants.KafkaTopicConfig;
 
 import java.time.Duration;
 

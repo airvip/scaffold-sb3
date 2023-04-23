@@ -1,4 +1,4 @@
-package wang.diff.user.server.controller.api;
+package wang.diff.user.server.controller.common;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;

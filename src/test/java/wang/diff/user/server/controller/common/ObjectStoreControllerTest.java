@@ -13,7 +13,7 @@ public class ObjectStoreControllerTest {
 
 
     @Test
-    void uploadMutilPartTest() {
+    void uploadMultiPartTest() {
         // objectStoreController.uploadMultipart(null);
         System.out.println("hello");
     }

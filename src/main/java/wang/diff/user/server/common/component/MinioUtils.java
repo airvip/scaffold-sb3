@@ -1,4 +1,4 @@
-package wang.diff.user.server.util;
+package wang.diff.user.server.common.component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;

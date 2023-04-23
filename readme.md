@@ -38,6 +38,8 @@
 9. kafka
   * [Apache Kafka Support](https://docs.spring.io/spring-boot/docs/current/reference/html/messaging.html#messaging.kafka)
   * [Apache Kafka Reference](https://docs.spring.io/spring-kafka/docs/current/reference/html/#reference)
+10. jwt
+  * [jjwt](https://github.com/jwtk/jjwt)
 
 # 打包运行
 

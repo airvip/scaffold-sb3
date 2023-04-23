@@ -15,5 +15,7 @@ public interface UserService {
     UserDTO getById(Long id);
 
     UserPageDTO getPage(Integer pageNum, Integer pageSize, String username);
+
+    UserDTO getByMobile(String mobile);
     
 }

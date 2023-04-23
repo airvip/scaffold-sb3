@@ -3,10 +3,10 @@ package wang.diff.user.server.producer.kafka;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
-import wang.diff.user.server.constants.KafkaTopicConfig;
+import wang.diff.user.server.common.constants.KafkaTopicConfig;
 import wang.diff.user.server.dto.SendShortMsgDTO;
 import wang.diff.user.server.dto.SendVerificationCodeDTO;
-import wang.diff.user.server.util.JacksonUtils;
+import wang.diff.user.server.common.util.JacksonUtils;
 
 @Slf4j
 @Component

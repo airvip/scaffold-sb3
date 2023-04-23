@@ -8,12 +8,14 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import diff.wang.user.server.controller.model.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 
 import jakarta.annotation.Resource;
+import wang.diff.user.server.common.exception.BizException;
 import wang.diff.user.server.dao.UserMapper;
 import wang.diff.user.server.entity.User;
 import wang.diff.user.server.service.UserService;
@@ -65,6 +67,17 @@ public class UserServiceImpl implements UserService {
         List<User> list = userMapper.selectList(queryWrapper);
         PageInfo<User> page = new PageInfo<>(list);
         return userConverter.covert2PageDto(page);
+    }
+
+    @Override
+    public UserDTO getByMobile(String mobile) {
+        QueryWrapper<User> objectQueryWrapper = new QueryWrapper<>();
+        objectQueryWrapper.eq(User.MOBILE, mobile);
+        User user = userMapper.selectOne(objectQueryWrapper);
+        if(user == null) {
+            throw new BizException(HttpStatus.BAD_REQUEST, "user.400000", "用户不存在");
+        }
+        return userConverter.convert2Dto(user);
     }
 
     @Override

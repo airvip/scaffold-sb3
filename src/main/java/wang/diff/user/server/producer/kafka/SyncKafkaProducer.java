@@ -6,20 +6,17 @@ import lombok.val;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.internals.RecordHeader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 import org.springframework.kafka.requestreply.RequestReplyFuture;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
-import wang.diff.user.server.constants.KafkaTopicConfig;
+import wang.diff.user.server.common.constants.KafkaTopicConfig;
 import wang.diff.user.server.dto.request.KafkaSyncHelloReqDTO;
 import wang.diff.user.server.dto.request.KafkaSyncSayReqDTO;
 import wang.diff.user.server.dto.response.KafkaSyncHelloRespDTO;
 import wang.diff.user.server.dto.response.KafkaSyncSayRespDTO;
-import wang.diff.user.server.util.JacksonUtils;
-
-import java.util.concurrent.ExecutionException;
+import wang.diff.user.server.common.util.JacksonUtils;
 
 @Slf4j
 @Component

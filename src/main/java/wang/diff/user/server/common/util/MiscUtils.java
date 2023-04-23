@@ -1,4 +1,4 @@
-package wang.diff.user.server.util;
+package wang.diff.user.server.common.util;
 
 import cn.hutool.core.util.StrUtil;
 

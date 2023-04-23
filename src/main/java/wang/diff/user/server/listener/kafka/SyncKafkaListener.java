@@ -5,10 +5,10 @@ import lombok.val;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
-import wang.diff.user.server.constants.KafkaTopicConfig;
+import wang.diff.user.server.common.constants.KafkaTopicConfig;
 import wang.diff.user.server.dto.response.KafkaSyncHelloRespDTO;
 import wang.diff.user.server.dto.response.KafkaSyncSayRespDTO;
-import wang.diff.user.server.util.JacksonUtils;
+import wang.diff.user.server.common.util.JacksonUtils;
 
 @Slf4j
 @Component

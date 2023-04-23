@@ -1,4 +1,4 @@
-package wang.diff.user.server.util;
+package wang.diff.user.server.common.util;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

@@ -7,7 +7,7 @@ import io.minio.MinioClient;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
-import wang.diff.user.server.util.MinioUtils;
+import wang.diff.user.server.common.component.MinioUtils;
 
 import java.util.List;
 

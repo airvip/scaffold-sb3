@@ -1,5 +1,6 @@
 package wang.diff.user.server.common.exception;
 
+import com.google.common.base.Strings;
 import org.springframework.http.HttpStatus;
 
 public class BizException extends RuntimeException{
@@ -9,7 +10,7 @@ public class BizException extends RuntimeException{
     private final Object[] args;
 
     public BizException(HttpStatus httpStatus, String bizCode, Object... args) {
-        // super(Strings.nullToEmpty(bizCode));
+        super(Strings.nullToEmpty(bizCode));
         this.httpStatus = httpStatus;
         this.bizCode = bizCode;
         this.args = args;
